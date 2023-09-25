@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="header">Український заголовок</string>
+    <string name="main_text">Текст українською</string>
+    <string name="app_name">lab1</string>
+    <string name="change_locale">Змінити мову</string>
+</resources>
