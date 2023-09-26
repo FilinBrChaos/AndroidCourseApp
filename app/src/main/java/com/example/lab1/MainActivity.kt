@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.lab1.databinding.ActivityMainBinding
 import java.util.Locale
 
@@ -19,14 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val langManager = LanguageManager()
+        val viewModel = ViewModelProvider(this)[MainActivityModel::class.java]
 
         binding.changeLocaleButton.setOnClickListener {
-            if (langManager.persistedLocale(this) == LanguageManager.Locales.English)
-                langManager.persistLocale(this, LanguageManager.Locales.Ukranian)
-            else langManager.persistLocale(this, LanguageManager.Locales.English)
-
-            binding.localizationLabel.text = langManager.persistedLocale(this).name
+            viewModel.changeLocaleButtonBehaviour(this)
             this.recreate()
         }
     }
