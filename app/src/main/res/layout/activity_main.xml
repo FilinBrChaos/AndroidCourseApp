@@ -18,12 +18,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current locale: "/>
+            android:text="@string/current_locale_label"/>
 
         <TextView
             android:id="@+id/localization_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/current_locale"/>
     </LinearLayout>
 
     <TextView
