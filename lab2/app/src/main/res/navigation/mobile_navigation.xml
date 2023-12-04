@@ -9,17 +9,27 @@
         android:id="@+id/nav_home"
         android:name="com.example.lab2.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_myFragment"
+            app:destination="@id/nav_my_fragment" />
+        <action
+            android:id="@+id/action_nav_home_to_tabbedActivity"
+            app:destination="@id/tabbedActivity" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.lab2.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_my_fragment"
+        android:name="com.example.lab2.ui.myFragment.MyFragment"
+        android:label="fragment_my"
+        tools:layout="@layout/fragment_my" >
+        <action
+            android:id="@+id/action_myFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <activity
+        android:id="@+id/tabbedActivity"
+        android:name="com.example.lab2.TabbedActivity"
+        android:label="activity_tabbed"
+        tools:layout="@layout/activity_tabbed" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.lab2.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>
