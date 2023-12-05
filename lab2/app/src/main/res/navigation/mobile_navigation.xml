@@ -15,7 +15,7 @@
             app:destination="@id/nav_my_fragment" />
         <action
             android:id="@+id/action_nav_home_to_tabbedActivity"
-            app:destination="@id/tabbedActivity" />
+            app:destination="@id/nav_tabbed_activity" />
     </fragment>
     <fragment
         android:id="@+id/nav_my_fragment"
@@ -27,7 +27,7 @@
             app:destination="@id/nav_home" />
     </fragment>
     <activity
-        android:id="@+id/tabbedActivity"
+        android:id="@+id/nav_tabbed_activity"
         android:name="com.example.lab2.TabbedActivity"
         android:label="activity_tabbed"
         tools:layout="@layout/activity_tabbed" />
