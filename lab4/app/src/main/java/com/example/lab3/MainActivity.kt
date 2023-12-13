@@ -19,15 +19,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val dbManager = DbManager(this)
 
-        val array = arrayOf(Staff(0, "Scarlett", 2300),
-            Product(1, "Butter", 2),
-            Staff(2, "Antonio", 3000),
-            Product(3, "Water", 1))
-
-        array.forEach {
-            if (it is Product) dbManager.saveProduct(it)
-            if (it is Staff) dbManager.saveStaff(it)
-        }
+//        val array = arrayOf(Staff(0, "Scarlett", 2300),
+//            Product(1, "Butter", 2),
+//            Staff(2, "Antonio", 3000),
+//            Product(3, "Water", 1))
+//
+//        array.forEach {
+//            if (it is Product) dbManager.saveProduct(it)
+//            if (it is Staff) dbManager.saveStaff(it)
+//        }
 
         var entitiesFromDb: Array<StoreEntity> = arrayOf()
         entitiesFromDb += dbManager.getAllProducts().toTypedArray()
