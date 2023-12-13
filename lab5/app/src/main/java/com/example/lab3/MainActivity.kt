@@ -2,19 +2,18 @@ package com.example.lab3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.lab3.adapter.ProductAdapter
 import com.example.lab3.databinding.ActivityMainBinding
-import com.example.lab3.models.Product
-import com.example.lab3.models.Staff
 import com.example.lab3.models.StoreEntity
 import com.example.lab3.network.IStoreAPI
 import com.example.lab3.network.StoreHelper
 import com.example.lab3.store.DbManager
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding;
@@ -24,25 +23,39 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val dbManager = DbManager(this)
 
+        binding.refreshButton.setOnClickListener {
+            fetchData(dbManager)
+        }
+        binding.deleteButton.setOnClickListener {
+            dbManager.dropTables()
+        }
+
+        dbManager.onDbChanged = {
+            refreshLayout(dbManager)
+        }
+        refreshLayout(dbManager)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun fetchData(dbManager: DbManager) {
         val response = StoreHelper.getInstance().create(IStoreAPI::class.java)
         GlobalScope.launch {
-            val products = response.getProducts().body()
-
-            Log.d("result: ", (products?.get(0)?.description.toString()))
+            withContext(Dispatchers.Main) {
+                response.getProducts().body()?.forEach {
+                    dbManager.saveProduct(it)
+                }
+                response.getStaff().body()?.forEach {
+                    dbManager.saveStaff(it)
+                }
+            }
         }
-//        val array = arrayOf(Staff(0, "Scarlett", 2300),
-//            Product(1, "Butter", 2),
-//            Staff(2, "Antonio", 3000),
-//            Product(3, "Water", 1))
-//
-//        array.forEach {
-//            if (it is Product) dbManager.saveProduct(it)
-//            if (it is Staff) dbManager.saveStaff(it)
-//        }
+    }
 
+    private fun refreshLayout(dbManager: DbManager) {
         var entitiesFromDb: Array<StoreEntity> = arrayOf()
         entitiesFromDb += dbManager.getAllProducts().toTypedArray()
         entitiesFromDb += dbManager.getAllStaff().toTypedArray()
+
         binding.myRecyclerList.layoutManager = LinearLayoutManager(this)
         binding.myRecyclerList.adapter = ProductAdapter(entitiesFromDb)
     }

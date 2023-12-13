@@ -90,6 +90,7 @@ class DbManager(context: Context?): SQLiteOpenHelper(context, "app_data", null, 
                 cursor.moveToNext()
             }
         }
+        db.close()
         return products
     }
 
@@ -129,7 +130,14 @@ class DbManager(context: Context?): SQLiteOpenHelper(context, "app_data", null, 
                 cursor.moveToNext()
             }
         }
+        db.close()
         return staffs
     }
 
+    fun dropTables() {
+        val db = this.readableDatabase
+        db.execSQL("delete from $TABLE_PRODUCT")
+        db.execSQL("delete from $TABLE_STAFF")
+        onDbChanged()
+    }
 }
